@@ -1,14 +1,20 @@
 {
-    "zzz": {
-        "easy": {
-            "bestTime": 2893,
-            "wins": 1
-        }
-    },
-    "ZZZ": {
-        "hard": {
-            "bestTime": 207,
-            "wins": 2
-        }
+  "zzz": {
+    "easy": {
+      "bestTime": 2893,
+      "wins": 1
     }
+  },
+  "ZZZ": {
+    "hard": {
+      "bestTime": 207,
+      "wins": 2
+    }
+  },
+  "test": {
+    "easy": {
+      "bestTime": 65,
+      "wins": 1
+    }
+  }
 }
