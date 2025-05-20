@@ -22,5 +22,11 @@
       "bestTime": 115,
       "wins": 1
     }
+  },
+  "hello": {
+    "easy": {
+      "bestTime": 106,
+      "wins": 1
+    }
   }
 }
