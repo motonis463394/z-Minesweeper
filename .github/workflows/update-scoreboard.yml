@@ -1,0 +1,30 @@
+name: Update Scoreboard
+
+on:
+  workflow_dispatch:  # Allows manual trigger from GitHub UI
+
+jobs:
+  update-scoreboard:
+    runs-on: ubuntu-latest
+
+    env:
+      GITHUB_TOKEN: ${{ secrets.MY_SECRET_KEY }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./scripts
+
+      - name: Run update script
+        run: node update.js
+        working-directory: ./scripts
+        env:
+          GITHUB_TOKEN: ${{ secrets.MY_SECRET_KEY }}
