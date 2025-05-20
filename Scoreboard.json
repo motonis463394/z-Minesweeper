@@ -16,5 +16,11 @@
       "bestTime": 65,
       "wins": 1
     }
+  },
+  "popo": {
+    "easy": {
+      "bestTime": 115,
+      "wins": 1
+    }
   }
 }
