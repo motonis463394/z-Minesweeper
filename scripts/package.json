@@ -1,0 +1,9 @@
+{
+  "name": "scoreboard-updater",
+  "version": "1.0.0",
+  "main": "update.js",
+  "type": "module",
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  }
+}
