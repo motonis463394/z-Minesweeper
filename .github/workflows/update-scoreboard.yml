@@ -19,12 +19,17 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install dependencies
+      - name: Install Node.js dependencies
         run: npm install
         working-directory: ./scripts
 
-      - name: Run update script
+      - name: Run Node.js update script
         run: node update.js
         working-directory: ./scripts
+        env:
+          GITHUB_TOKEN: ${{ secrets.MY_SECRET_KEY }}
+
+      - name: Run PHP script
+        run: php scripts/index.php
         env:
           GITHUB_TOKEN: ${{ secrets.MY_SECRET_KEY }}
