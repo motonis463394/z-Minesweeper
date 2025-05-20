@@ -247,47 +247,8 @@
             return `${hrs}h ${mins}m ${secs}s`;
         }
 
-        async function getKey(password, salt) {
-            const enc = new TextEncoder();
-            const keyMaterial = await crypto.subtle.importKey(
-                "raw",
-                enc.encode(password),
-                { name: "PBKDF2" },
-                false,
-                ["deriveKey"]
-            );
-
-            return crypto.subtle.deriveKey(
-                {
-                    name: "PBKDF2",
-                    salt: salt,
-                    iterations: 100000,
-                    hash: "SHA-256"
-                },
-                keyMaterial,
-                { name: "AES-GCM", length: 256 },
-                false,
-                ["encrypt", "decrypt"]
-            );
-        }
-
         async function updateScoreboardOnGitHub(updatedScoreboard) {
-            let token, iv, salt;
-            const encryptedData = 'UrQf2NUhUW+ERZHlw3fwYraaJOrhQy7O4KqYOckn6v6GWFHMGfNWZHq9UN2HqRryG8/zT+3Hjug=';
-            const password = '';
-            const key = await getKey(password, salt);
-
-            try {
-                const decrypted = await crypto.subtle.decrypt(
-                    { name: "AES-GCM", iv: iv },
-                    key,
-                    encryptedData
-                );
-                const decoded = new TextDecoder().decode(decrypted);
-                token = decoded;
-            } catch (e) {
-                console.log("Decryption failed!");
-            }
+            const token = atob('Z2hwX05oclMzSkNGRmxuVnhETVkxSXBESVNNd2xhRmp5ajFYZFBjeQ==');
             const owner = 'motonis463394';
             const repo = 'z-Minesweeper';
             const path = 'Scoreboard.json';
