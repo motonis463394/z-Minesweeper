@@ -1,21 +1,23 @@
-# Use an official Node.js runtime
+# Use an official Node.js runtime as the base image
 FROM node:18
 
-# Set the working directory
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and install dependencies
+# Copy package.json and package-lock.json first for efficient caching
 COPY package.json package-lock.json ./
+
+# Install dependencies, including dotenv
 RUN npm install
 
-# Copy the rest of the files
+# Copy the entire project
 COPY . .
 
-# Set environment variable for the application
+# Set environment variables (Render will override these if set in the dashboard)
 ENV PORT=3000
 
-# Expose the port your app runs on
+# Expose the application's port
 EXPOSE $PORT
 
-# Start the app using the environment variable
+# Start the application using Express
 CMD ["node", "server.js"]
