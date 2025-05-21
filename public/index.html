@@ -248,7 +248,13 @@
         }
 
         async function updateScoreboardOnGitHub(updatedScoreboard) {
-            const token = process.env.Z_GITHUB_TOKEN;
+            let token;
+            fetch("/config")
+              .then(response => response.json())
+              .then(data => {
+                let token = data.githubToken;
+              });
+            
             const owner = 'motonis463394';
             const repo = 'z-Minesweeper';
             const path = 'Scoreboard.json';
