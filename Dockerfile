@@ -1,20 +1,21 @@
-# Use an official Node.js runtime as the base image
+# Use an official Node.js runtime
 FROM node:18
 
-# Set the working directory inside the container
+# Set the working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json first for efficient caching
+# Copy package.json and install dependencies
 COPY package.json package-lock.json ./
-
-# Install dependencies
 RUN npm install
 
-# Copy the entire project
+# Copy the rest of the files
 COPY . .
 
-# Expose the application's port (3000)
-EXPOSE 3000
+# Set environment variable for the application
+ENV PORT=3000
 
-# Start the application using Express
+# Expose the port your app runs on
+EXPOSE $PORT
+
+# Start the app using the environment variable
 CMD ["node", "server.js"]
