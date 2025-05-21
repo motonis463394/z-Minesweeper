@@ -1,87 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Minesweeper Scoreboard</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 2rem;
-      }
-      table {
-        border-collapse: collapse;
-        width: 100%;
-      }
-      table,
-      th,
-      td {
-        border: 1px solid #ccc;
-      }
-      th,
-      td {
-        padding: 0.5rem;
-        text-align: left;
-      }
-      th {
-        background-color: #f0f0f0;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Minesweeper Scoreboard</h1>
-    <div id="scoreboard">Loading scoreboard data…</div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitRows Example</title>
+    <script src="https://unpkg.com/gitrows@latest/dist/gitrows.min.js"></script>
+</head>
+<body>
 
-    <!-- Use the type="module" script to load ESM versions of Gitrows and Buffer -->
-    <script type="module">
-      // Import the ESM build of Gitrows from unpkg.
-      import Gitrows from "https://unpkg.com/gitrows@latest/dist/gitrows.esm.min.js";
-      // Import a Buffer polyfill from jspm.dev.
-      import { Buffer } from "https://jspm.dev/buffer";
-      // Set Buffer as a global variable so that Gitrows (and any other code) can use it.
-      window.Buffer = Buffer;
+    <h1>Scoreboard Data</h1>
+    <div id="scoreboard"></div>
 
-      console.log("Buffer is defined:", window.Buffer);
+    <script>
+        // Initialize GitRows
+        const gitrows = new GitRows();
 
-      // Define the path to your JSON file according to Gitrows syntax.
-      // Format: '@github/{username}/{repository}/{file}?ref={branch}'
-      const dataPath = '@github/motonis463394/z-Minesweeper/Scoreboard.json?ref=main';
-
-      // Retrieve the JSON data using Gitrows.
-      Gitrows.get(dataPath)
-        .then((data) => {
-          console.log("Fetched data:", data);
-          const outputDiv = document.getElementById("scoreboard");
-
-          // If the data is an array, build an HTML table.
-          if (Array.isArray(data) && data.length > 0) {
-            let html = "<table><thead><tr>";
-            // Use the first object's keys as table headers.
-            Object.keys(data[0]).forEach((key) => {
-              html += `<th>${key}</th>`;
+        // Fetch JSON data from the repository
+        gitrows.get("https://github.com/motonis463394/z-Minesweeper/blob/main/Scoreboard.json")
+            .then(data => {
+                console.log(data); // Log data to console
+                document.getElementById("scoreboard").innerHTML = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                console.error("Error fetching data:", error);
             });
-            html += "</tr></thead><tbody>";
-            // Populate table rows.
-            data.forEach((item) => {
-              html += "<tr>";
-              Object.keys(item).forEach((key) => {
-                html += `<td>${item[key]}</td>`;
-              });
-              html += "</tr>";
-            });
-            html += "</tbody></table>";
-            outputDiv.innerHTML = html;
-          } else if (typeof data === "object") {
-            // Fallback: display the data as formatted JSON.
-            outputDiv.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
-          } else {
-            outputDiv.innerHTML = "<p>Data format is not recognized.</p>";
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
-          document.getElementById("scoreboard").innerHTML =
-            "<p>Error loading scoreboard data.</p>";
-        });
     </script>
-  </body>
+
+</body>
 </html>
