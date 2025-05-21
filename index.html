@@ -185,8 +185,7 @@
 
         function fetchScoreboardAndUpdateDisplay() {
 
-            const gitrows = new Gitrows();
-            const dataPath = '@github/motonis463394/z-Minesweeper/Scoreboard.json?ref=main';
+            gitRows();
 
             const url = `https://raw.githubusercontent.com/motonis463394/z-Minesweeper/main/Scoreboard.json?cacheBust=${Date.now()}`;
 
