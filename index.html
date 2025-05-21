@@ -5,16 +5,6 @@
     <meta charset="UTF-8">
     <title>Minesweeper Enhanced</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/buffer/6.0.3/buffer.min.js"></script>
-    <script>
-        // Make Buffer available as a global variable.
-        if (!window.Buffer) {
-            window.Buffer = buffer.Buffer;
-        }
-    </script>
-
-    <!-- Include Gitrows via CDN.
-         Note: Make sure that this URL points to the Gitrows library version that supports browser usage.
-    -->
     <script src="https://unpkg.com/gitrows@latest/dist/gitrows.min.js"></script>
     <style>
         body {
@@ -178,7 +168,7 @@
 
         let scoreboard = {};
 
-        function gitRows() {
+        function testGitRows() {
             const dataPath = '@github/motonis463394/z-Minesweeper/Scoreboard.json?ref=main';
 
             Gitrows.get(dataPath)
@@ -194,7 +184,7 @@
 
         function fetchScoreboardAndUpdateDisplay() {
 
-            gitRows();
+            testGitRows();
 
             const url = `https://raw.githubusercontent.com/motonis463394/z-Minesweeper/main/Scoreboard.json?cacheBust=${Date.now()}`;
 
