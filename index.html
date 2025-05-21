@@ -4,8 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Minesweeper Enhanced</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/buffer/6.0.3/buffer.min.js"></script>
-    <script src="https://unpkg.com/gitrows@latest/dist/gitrows.min.js"></script>
+    <script src="https://unpkg.com/buffer@6.0.3/dist/buffer.umd.js"></script>
+    <script>
+        // Ensure that the global Buffer is defined.
+        // The UMD build from unpkg should attach a variable named Buffer.
+        if (typeof window.Buffer === "undefined" && typeof Buffer !== "undefined") {
+            window.Buffer = Buffer;
+        }
+        console.log("Buffer is defined:", window.Buffer);
+    </script>
+
+    <!-- 2. Load Gitrows (UMD build, which expects Buffer to be defined) -->
+    <script src="https://unpkg.com/gitrows@latest/dist/gitrows.umd.min.js"></script>
+
     <style>
         body {
             font-family: Arial, sans-serif;
