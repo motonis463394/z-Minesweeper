@@ -1,10 +1,15 @@
 {
   "name": "z-Minesweeper",
   "version": "1.0.0",
-  "dependencies": {
-    "express": "^4.17.1"
-  },
+  "description": "A simple Express.js server",
+  "main": "server.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
