@@ -1,13 +1,9 @@
 // Import required modules
 const express = require("express");
 const path = require("path");
-const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-// Enable CORS (optional, useful if frontend makes API requests)
-app.use(cors());
 
 // Serve static files efficiently
 app.use(express.static("public", { extensions: ["html"] }));
