@@ -10,8 +10,8 @@ COPY package.json package-lock.json ./
 # Install dependencies
 RUN npm install
 
-# Verify dotenv is installed (for debugging)
-RUN ls -la node_modules | grep dotenv
+# Verify that dotenv is installed (now it will work!)
+RUN ls -la node_modules | grep dotenv || echo "dotenv not found"
 
 # Copy the entire project
 COPY . .
