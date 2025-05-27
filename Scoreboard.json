@@ -4,47 +4,5 @@
       "bestTime": 2893,
       "wins": 1
     }
-  },
-  "ZZZ": {
-    "hard": {
-      "bestTime": 207,
-      "wins": 2
-    }
-  },
-  "test": {
-    "easy": {
-      "bestTime": 65,
-      "wins": 1
-    }
-  },
-  "popo": {
-    "easy": {
-      "bestTime": 115,
-      "wins": 1
-    }
-  },
-  "hello": {
-    "easy": {
-      "bestTime": 106,
-      "wins": 1
-    }
-  },
-  "XXX": {
-    "medium": {
-      "bestTime": 121,
-      "wins": 1
-    }
-  },
-  "QWERTY": {
-    "easy": {
-      "bestTime": 81,
-      "wins": 1
-    }
-  },
-  "ZACH": {
-    "easy": {
-      "bestTime": 84,
-      "wins": 1
-    }
   }
 }
