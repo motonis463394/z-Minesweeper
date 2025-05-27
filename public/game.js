@@ -387,10 +387,10 @@ function checkWin() {
         }
     }
     if (revealedCount === ROWS * COLS - MINES_COUNT) {
+        fetchScoreboardAndUpdateDisplay();
         gameOver = true;
         stopTimer();
         alert("Congratulations! You won!");
-
         const timeTaken = Math.floor((Date.now() - startTime) / 1000);
         if (!scoreboard[currentPlayer]) scoreboard[currentPlayer] = {};
         if (!scoreboard[currentPlayer][currentDifficulty]) {
@@ -402,7 +402,6 @@ function checkWin() {
                 stats.bestTime = timeTaken;
             }
         }
-        fetchScoreboardAndUpdateDisplay();
         saveScoreboard();
     }
 }
