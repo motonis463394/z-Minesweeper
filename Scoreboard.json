@@ -34,5 +34,11 @@
       "bestTime": 121,
       "wins": 1
     }
+  },
+  "QWERTY": {
+    "easy": {
+      "bestTime": 81,
+      "wins": 1
+    }
   }
 }
