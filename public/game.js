@@ -1,3 +1,13 @@
+function showLoading() {
+    const overlay = document.getElementById('loading-overlay');
+    overlay.style.display = 'flex';
+}
+
+function hideLoading() {
+    const overlay = document.getElementById('loading-overlay');
+    overlay.style.display = 'none';
+}
+
 const difficulties = {
     easy: { rows: 8, cols: 8, mines: 10 },
     medium: { rows: 10, cols: 10, mines: 15 },
@@ -22,6 +32,8 @@ const scoreboardBody = document.getElementById('scoreboard-body');
 let scoreboard = {};
 
 function fetchScoreboardAndUpdateDisplay() {
+    showLoading();
+
     const url = `https://raw.githubusercontent.com/motonis463394/z-Minesweeper/main/Scoreboard.json?cacheBust=${Date.now()}`;
 
     fetch(url, { cache: "no-store" })
@@ -38,6 +50,7 @@ function fetchScoreboardAndUpdateDisplay() {
         })
         .catch(error => {
             console.error("❌ Error loading scoreboard:", error);
+            hideLoading();
         });
 }
 
@@ -80,6 +93,13 @@ function updateScoreboardDisplay() {
                                 `;
         scoreboardBody.appendChild(row);
     }
+
+    if (rows.length === 0) {
+        const emptyRow = document.createElement("tr");
+        emptyRow.innerHTML = "<td colspan='4'>No scores available</td>";
+        scoreboardBody.appendChild(emptyRow);
+    }
+    hideLoading();
 }
 
 function startTimer() {
@@ -382,6 +402,7 @@ function checkWin() {
                 stats.bestTime = timeTaken;
             }
         }
+        fetchScoreboardAndUpdateDisplay();
         saveScoreboard();
     }
 }
