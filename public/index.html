@@ -248,71 +248,84 @@
         }
 
         async function updateScoreboardOnGitHub(updatedScoreboard) {
+            // Step 1: Fetch GitHub token correctly
             let token;
-            fetch("/config")
-              .then(response => response.json())
-              .then(data => {
-                let token = data.githubToken;
-              });
-            
+            try {
+                const configRes = await fetch("/config");
+                if (!configRes.ok) {
+                    throw new Error(`Failed to fetch config: ${configRes.status}`);
+                }
+                const configData = await configRes.json();
+                token = configData.githubToken;
+
+                if (!token) {
+                    console.error("❌ GitHub token is undefined!");
+                    return;
+                }
+            } catch (error) {
+                console.error("❌ Error fetching config:", error);
+                return;
+            }
+
             const owner = 'motonis463394';
             const repo = 'z-Minesweeper';
             const path = 'Scoreboard.json';
             const branch = 'main';
-
             const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
 
             console.log("🔄 Starting scoreboard update...");
+            console.log("🔑 Using GitHub token:", token);
 
-            // Step 1: Get the current file SHA
-            console.log("📥 Fetching current file metadata...");
-            const getRes = await fetch(url, {
-                headers: {
-                    Authorization: `token ${token}`,
-                    Accept: 'application/vnd.github.v3+json'
+            try {
+                // Step 2: Get the current file SHA
+                console.log("📥 Fetching current file metadata...");
+                const getRes = await fetch(url, {
+                    headers: {
+                        Authorization: `token ${token}`,
+                        Accept: 'application/vnd.github.v3+json'
+                    }
+                });
+
+                if (!getRes.ok) {
+                    throw new Error(`Failed to fetch file metadata: ${getRes.status}`);
                 }
-            });
 
-            if (!getRes.ok) {
-                console.error("❌ Failed to fetch file metadata:", getRes.status, await getRes.text());
-                return;
-            }
+                const fileData = await getRes.json();
+                const sha = fileData.sha;
+                console.log("✅ File SHA retrieved:", sha);
 
-            const fileData = await getRes.json();
-            const sha = fileData.sha;
-            console.log("✅ File SHA retrieved:", sha);
+                // Step 3: Prepare updated content
+                const content = btoa(JSON.stringify(updatedScoreboard, null, 2));
+                console.log("📝 Updated content prepared.");
 
-            // Step 2: Prepare updated content
-            const content = btoa(JSON.stringify(updatedScoreboard, null, 2));
-            console.log("📝 Updated content prepared.");
+                // Step 4: Send PUT request to update the file
+                console.log("📤 Sending update request to GitHub...");
+                const updateRes = await fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        Authorization: `token ${token}`,
+                        Accept: 'application/vnd.github.v3+json'
+                    },
+                    body: JSON.stringify({
+                        message: 'Update scoreboard',
+                        content: content,
+                        sha: sha,
+                        branch: branch
+                    })
+                });
 
-            // Step 3: Send PUT request to update the file
-            console.log("📤 Sending update request to GitHub...");
-            const updateRes = await fetch(url, {
-                method: 'PUT',
-                headers: {
-                    Authorization: `token ${token}`,
-                    Accept: 'application/vnd.github.v3+json'
-                },
-                body: JSON.stringify({
-                    message: 'Update scoreboard',
-                    content: content,
-                    sha: sha,
-                    branch: branch
-                })
-            });
+                if (!updateRes.ok) {
+                    throw new Error(`Failed to update scoreboard: ${updateRes.status}`);
+                }
 
-            if (updateRes.ok) {
                 const result = await updateRes.json();
                 console.log("✅ Scoreboard updated successfully!");
                 console.log("🔗 View it here:", result.content.html_url);
                 setTimeout(fetchScoreboardAndUpdateDisplay, 2000);
-            } else {
-                console.error("❌ Failed to update scoreboard:", updateRes.status, await updateRes.text());
+            } catch (error) {
+                console.error("❌ Error during scoreboard update:", error);
             }
         }
-
-
 
         function saveScoreboard() {
             //localStorage.setItem("minesweeperScoreboard", JSON.stringify(scoreboard));
