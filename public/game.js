@@ -387,7 +387,7 @@ function checkWin() {
         }
     }
     if (revealedCount === ROWS * COLS - MINES_COUNT) {
-        fetchScoreboardAndUpdateDisplay();
+        //fetchScoreboardAndUpdateDisplay();
         gameOver = true;
         stopTimer();
         alert("Congratulations! You won!");
