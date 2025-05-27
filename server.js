@@ -1,10 +1,13 @@
 // Import required modules
 const express = require("express");
 const path = require("path");
-require("dotenv").config(); // Load environment variables
+const dotenv = require("dotenv");
+
+// Load environment variables
+dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000; // Use environment variable for the port
+const PORT = process.env.PORT || 3000;
 
 // Serve static files from the "public" folder
 app.use(express.static(path.join(__dirname, "public")));

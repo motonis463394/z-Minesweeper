@@ -7,17 +7,20 @@ WORKDIR /app
 # Copy package.json and package-lock.json first for efficient caching
 COPY package.json package-lock.json ./
 
-# Install dependencies, including dotenv
+# Install dependencies
 RUN npm install
+
+# Verify dotenv is installed (for debugging)
+RUN ls -la node_modules | grep dotenv
 
 # Copy the entire project
 COPY . .
 
-# Set environment variables (Render will override these if set in the dashboard)
+# Set environment variables
 ENV PORT=3000
 
 # Expose the application's port
 EXPOSE $PORT
 
-# Start the application using Express
+# Start the application
 CMD ["node", "server.js"]
