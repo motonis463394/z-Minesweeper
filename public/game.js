@@ -123,6 +123,7 @@ function formatTime(seconds) {
 }
 
 async function updateScoreboardOnGitHub(updatedScoreboard) {
+    showLoading();
     // Step 1: Fetch GitHub token correctly
     let token;
     try {
