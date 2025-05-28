@@ -22,5 +22,11 @@
       "bestTime": 48,
       "wins": 1
     }
+  },
+  "TEST": {
+    "easy": {
+      "bestTime": 50,
+      "wins": 1
+    }
   }
 }
