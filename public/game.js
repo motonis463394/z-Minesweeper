@@ -1,10 +1,24 @@
+let countUpInterval;
+
 function showLoading() {
     const overlay = document.getElementById('loading-overlay');
+    const display = document.getElementById('countup');
+    let timer = 0;
+
     overlay.style.display = 'flex';
+
+    countUpInterval = setInterval(function () {
+        display.textContent = timer + "s";
+        if (timer >= 60) {
+            display.textContent = "Completed in " + timer + "s!";
+        }
+        timer++;
+    }, 1000);
 }
 
 function hideLoading() {
     const overlay = document.getElementById('loading-overlay');
+    clearInterval(countUpInterval);
     overlay.style.display = 'none';
 }
 
@@ -197,7 +211,7 @@ async function updateScoreboardOnGitHub(updatedScoreboard) {
         const result = await updateRes.json();
         //console.log("✅ Scoreboard updated successfully!");
         //console.log("🔗 View it here:", result.content.html_url);
-        setTimeout(fetchScoreboardAndUpdateDisplay, 5000);
+        setTimeout(fetchScoreboardAndUpdateDisplay, 60000); // Refresh scoreboard after 60 seconds
     } catch (error) {
         console.error("❌ Error during scoreboard update:", error);
     }
