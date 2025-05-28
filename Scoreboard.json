@@ -16,5 +16,11 @@
       "bestTime": 246,
       "wins": 1
     }
+  },
+  "ABC": {
+    "easy": {
+      "bestTime": 48,
+      "wins": 1
+    }
   }
 }
